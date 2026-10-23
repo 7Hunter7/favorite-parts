@@ -3,6 +3,12 @@ const BASE =
   "https://api.favorit-parts.ru/hs/hsprice/";
 const KEY =
   process.env.REACT_APP_FAVORIT_KEY || "00000000-0000-0000-0000-000000000001";
+const ERROR_MAP = {
+  "Empty key!": "Не указан ключ доступа.",
+  "Invalid access key": "Неверный ключ доступа.",
+  "Request quota exceeded!":
+    "Слишком много запросов. Подождите и попробуйте снова.",
+};
 
 function buildUrl({ number, brand, analogues, info }) {
   const p = new URLSearchParams({ key: KEY, number });
@@ -28,7 +34,7 @@ async function request(params) {
     // тело не JSON — оставим null
   }
   // Ловушка 1: ошибка приходит как {error: "..."}
-  if (data?.error) throw new Error(data.error);
+  if (data?.error) throw new Error(ERROR_MAP[data.error] || data.error);
   if (!res.ok) throw new Error(`Ошибка сервера (HTTP ${res.status})`);
   // Ловушка 2: пустой массив
   if (!Array.isArray(data?.goods) || data.goods.length === 0) return [];

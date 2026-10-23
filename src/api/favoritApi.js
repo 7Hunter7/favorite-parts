@@ -13,16 +13,25 @@ function buildUrl({ number, brand, analogues, info }) {
 }
 
 async function request(params) {
-  const res = await fetch(buildUrl(params));
-  if (!res.ok) throw new Error(`https${res.status}`);
-  const data = await res.json();
+  let res;
+  try {
+    res = await fetch(buildUrl(params));
+  } catch (e) {
+    throw new Error("Сервер недоступен. Проверьте соединение.");
+  }
 
+  // Для 4xx/5xx
+  let data = null;
+  try {
+    data = await res.json();
+  } catch {
+    // тело не JSON — оставим null
+  }
   // Ловушка 1: ошибка приходит как {error: "..."}
-  if (data.error) throw new Error(data.error);
-
+  if (data?.error) throw new Error(data.error);
+  if (!res.ok) throw new Error(`Ошибка сервера (HTTP ${res.status})`);
   // Ловушка 2: пустой массив
-  if (!Array.isArray(data.goods) || data.goods.length === 0) return [];
-
+  if (!Array.isArray(data?.goods) || data.goods.length === 0) return [];
   // Ловушка 3: "пустышка" при ненайденной детали (brand:"" count:0 warehouses:[])
   return data.goods.filter((g) => g.brand && g.number);
 }

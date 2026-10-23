@@ -14,7 +14,9 @@ export default function App() {
       <SearchForm />
       <ErrorBox message={error} />
       {brandsLoading && <Loader label="Ищем производителей..." />}
-      {!brandsLoading && brands.length === 0 && !error && <div className="text-muted">Введите артикул и нажмите «Найти».</div>}
+      {!brandsLoading && brands.length === 0 && !error && (
+        <div className="text-muted">Введите артикул (от 3 символов) или нажмите «Найти».</div>
+      )}
       <BrandList />
       <ResultsTable />
     </div>

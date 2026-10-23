@@ -1,12 +1,18 @@
 import { useSelector } from 'react-redux';
+import Loader from './Loader';
 
 export default function ResultsTable() {
   const { analogues, analoguesLoading, selectedBrand } = useSelector((s) => s.search);
-  if (analoguesLoading || !selectedBrand) return null;
-  if (!analogues.length) return <div className="alert alert-warning">Аналоги не найдены.</div>;
+
+  if (!selectedBrand) return null;
+  if (analoguesLoading) return <Loader label={`Загружаем аналоги ${selectedBrand}...`} />;
+  if (!analogues.length) {
+    return <div className="alert alert-warning">Аналоги не найдены.</div>;
+  }
 
   return (
     <div className="table-responsive">
+      <h6>Предложения ({analogues.length})</h6>
       <table className="table table-sm table-hover align-middle">
         <thead className="table-light">
           <tr>
@@ -22,7 +28,10 @@ export default function ResultsTable() {
             <tr key={p.id}>
               <td>{p.brand}</td>
               <td>{p.number}</td>
-              <td>{p.name}</td>
+              <td>
+                {p.name}
+                {p.notRefund && <span className="badge bg-warning text-dark ms-2">невозврат</span>}
+              </td>
               <td className="text-end">{p.price.toLocaleString('ru-RU')}</td>
               <td className="text-end">{p.stock}</td>
             </tr>

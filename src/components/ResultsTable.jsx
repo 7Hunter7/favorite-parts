@@ -2,10 +2,11 @@ import { useSelector } from 'react-redux';
 import Loader from './Loader';
 
 export default function ResultsTable() {
-  const { analogues, analoguesLoading, selectedBrand } = useSelector((s) => s.search);
+  const { analogues, analoguesLoading, selectedBrand, error } = useSelector((s) => s.search);
 
   if (!selectedBrand) return null;
   if (analoguesLoading) return <Loader label={`Загружаем аналоги ${selectedBrand}...`} />;
+  if (error) return null;
   if (!analogues.length) {
     return <div className="alert alert-warning">Аналоги не найдены.</div>;
   }

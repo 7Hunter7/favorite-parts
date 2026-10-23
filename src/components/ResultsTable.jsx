@@ -11,8 +11,11 @@ export default function ResultsTable() {
   }
 
   return (
-    <div className="table-responsive">
-      <h6>Предложения ({analogues.length})</h6>
+    <section className="table-responsive">
+      <h3 className="h3 mb-2">
+        <span className="badge bg-secondary me-2">Этап 2</span>
+        Предложения ({analogues.length})
+      </h3>
       <table
         className="table table-sm table-hover align-middle"
         style={{ tableLayout: 'fixed', minWidth: 720 }}
@@ -38,7 +41,7 @@ export default function ResultsTable() {
             <tr key={p.id}>
               <td>{p.brand}</td>
               <td>{p.number}</td>
-              <td className="text-truncate text-wrap" title={p.name}>
+              <td className="text-truncate" title={p.name}>
                 {p.name}
                 {p.notRefund && <span className="badge bg-warning text-dark ms-2">невозврат</span>}
               </td>
@@ -48,6 +51,6 @@ export default function ResultsTable() {
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
   );
 }

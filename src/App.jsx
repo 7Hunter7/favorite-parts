@@ -5,17 +5,33 @@ import ResultsTable from './components/ResultsTable';
 import Loader from './components/Loader';
 import ErrorBox from './components/ErrorBox';
 
+const MIN_LEN = 2;
+
 export default function App() {
-  const { brandsLoading, error, brands } = useSelector((s) => s.search);
+  const { brandsLoading, error, brands, number } = useSelector((s) => s.search);
+  // Показываем подсказку, если пользователь ещё ничего не вводил
+  const showHint = !brandsLoading && !error && number === '';
+  // Показываем «не найдено», если запрос был и вернул пусто
+  const showEmpty = !brandsLoading && !error && number !== '' && brands.length === 0;
+
   return (
     <div className="container py-4">
-      <h1 className="h4 mb-1">Поиск автозапчастей Favorit-Parts</h1>
-      <p className="text-muted small">Шаг 1: артикул → бренд. Шаг 2: аналоги и предложения.</p>
+      <h1 className="h1 text-center mb-4">Автозапчасти Favorit-Parts</h1>
+      <h2 className="h2">
+        Поиск по артикулу
+      </h2>
       <SearchForm />
       <ErrorBox message={error} />
       {brandsLoading && <Loader label="Ищем производителей..." />}
-      {!brandsLoading && brands.length === 0 && !error && (
-        <div className="text-muted">Введите артикул (от 3 символов) или нажмите «Найти».</div>
+      {showHint && (
+        <div className="text-muted">
+          Введите артикул (от {MIN_LEN} символов) или нажмите «Найти».
+        </div>
+      )}
+      {showEmpty && (
+        <div className="alert alert-warning">
+          По артикулу «{number}» производители не найдены.
+        </div>
       )}
       <BrandList />
       <ResultsTable />

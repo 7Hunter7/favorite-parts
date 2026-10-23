@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadBrands } from '../store/searchSlice';
-
-const DEBOUNCE_MS = 700;
-const MIN_LEN = 2;
-const VALID_RE = /^[A-Za-z0-9\-/]+$/;
+import { DEBOUNCE_MS, MIN_LEN, VALID_RE } from '../constants';
 
 export default function SearchForm() {
   const dispatch = useDispatch();

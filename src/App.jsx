@@ -4,8 +4,7 @@ import BrandList from './components/BrandList';
 import ResultsTable from './components/ResultsTable';
 import Loader from './components/Loader';
 import ErrorBox from './components/ErrorBox';
-
-const MIN_LEN = 2;
+import { MIN_LEN } from './constants';
 
 export default function App() {
   const { brandsLoading, error, brands, number } = useSelector((s) => s.search);

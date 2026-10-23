@@ -55,6 +55,8 @@ src/
     Loader.jsx            // индикатор загрузки
     ErrorBox.jsx          // inline-ошибки API/сети
     ErrorBoundary.jsx     // защита от падения рендера
+  constants/
+    index.js              // константы
   App.jsx                 // композиция этапов
 ```
 

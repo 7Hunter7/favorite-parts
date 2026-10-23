@@ -12,10 +12,7 @@ export default function ResultsTable() {
 
   return (
     <section className="table-responsive">
-      <h3 className="h3 mb-2">
-        <span className="badge bg-secondary me-2">Этап 2</span>
-        Предложения ({analogues.length})
-      </h3>
+      <h3 className="h3 mb-2">Предложения ({analogues.length})</h3>
       <table
         className="table table-sm table-hover align-middle"
         style={{ tableLayout: 'fixed', minWidth: 720 }}

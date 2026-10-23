@@ -8,10 +8,7 @@ export default function BrandList() {
 
   return (
     <section className="mb-3">
-      <h3 className="h3 mb-2">
-        <span className="badge bg-secondary me-2">Этап 1</span>
-        Производители ({brands.length})
-      </h3>
+      <h3 className="h3 mb-2">Производители ({brands.length})</h3>
       <div className="d-flex flex-wrap gap-2">
         {brands.map((b) => (
           <button

@@ -1,6 +1,7 @@
 # Favorit-Parts — поиск автозапчастей и аналогов
 
 Двухэтапный поиск через API «Проценка».
+Демо: [https://favorit-parts.app/](https://favorite-parts.netlify.app/)
 
 ## Стек
 

@@ -1,8 +1,8 @@
 const BASE =
   process.env.REACT_APP_FAVORIT_URL ||
-  "http://api.favorit-parts.ru/hs/hsprice/";
+  "https://api.favorit-parts.ru/hs/hsprice/";
 const KEY =
-  process.env.REACT_APP_FAVORIT_KEY || "00000000-0000-0000-0000-0000000000001";
+  process.env.REACT_APP_FAVORIT_KEY || "00000000-0000-0000-0000-000000000001";
 
 function buildUrl({ number, brand, analogues, info }) {
   const p = new URLSearchParams({ key: KEY, number });
@@ -14,7 +14,7 @@ function buildUrl({ number, brand, analogues, info }) {
 
 async function request(params) {
   const res = await fetch(buildUrl(params));
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`https${res.status}`);
   const data = await res.json();
 
   // Ловушка 1: ошибка приходит как {error: "..."}

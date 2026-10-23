@@ -8,7 +8,7 @@ import ErrorBox from './components/ErrorBox';
 export default function App() {
   const { brandsLoading, error, brands } = useSelector((s) => s.search);
   return (
-    <div className="container py-4" style={{ maxWidth: 900 }}>
+    <div className="container py-4">
       <h1 className="h4 mb-1">Поиск автозапчастей Favorit-Parts</h1>
       <p className="text-muted small">Шаг 1: артикул → бренд. Шаг 2: аналоги и предложения.</p>
       <SearchForm />

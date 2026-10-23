@@ -32,7 +32,7 @@ export default function ResultsTable() {
                 {p.name}
                 {p.notRefund && <span className="badge bg-warning text-dark ms-2">невозврат</span>}
               </td>
-              <td className="text-end">{p.price.toLocaleString('ru-RU')}</td>
+              <td className="text-end">{Number(p.price || 0).toLocaleString('ru-RU')}</td>
               <td className="text-end">{p.stock}</td>
             </tr>
           ))}

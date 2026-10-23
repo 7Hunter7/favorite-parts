@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchBrands, fetchAnalogues } from "../api/favoritApi";
 
-// Показываем результат только если это ответ на последний запрос этапа 1
+// Защита от гонок: храним requestId последнего запроса каждого этапа.
 const latestBrandsRequest = { current: null };
+const latestAnaloguesRequest = { current: null };
 
 // Два этапа = два thunk'а. Оба пишут в один slice, но в разные поля.
 export const loadBrands = createAsyncThunk(
@@ -36,6 +37,7 @@ const slice = createSlice({
     },
   },
   extraReducers: (b) => {
+    // Этап 1: бренды
     b.addCase(loadBrands.pending, (s, a) => {
       s.brandsLoading = true;
       s.error = null;
@@ -55,20 +57,21 @@ const slice = createSlice({
         s.brandsLoading = false;
         s.error = a.error.message;
       })
+      // Этап 2: аналоги
       .addCase(loadAnalogues.pending, (s, a) => {
-        if (a.meta.requestId !== latestBrandsRequest.current) return;
         s.analoguesLoading = true;
         s.error = null;
         s.analogues = [];
         s.selectedBrand = a.meta.arg.brand;
+        latestAnaloguesRequest.current = a.meta.requestId;
       })
       .addCase(loadAnalogues.fulfilled, (s, a) => {
-        if (a.meta.requestId !== latestBrandsRequest.current) return;
+        if (a.meta.requestId !== latestAnaloguesRequest.current) return;
         s.analoguesLoading = false;
         s.analogues = a.payload.items;
       })
       .addCase(loadAnalogues.rejected, (s, a) => {
-        if (a.meta.requestId !== latestBrandsRequest.current) return;
+        if (a.meta.requestId !== latestAnaloguesRequest.current) return;
         s.analoguesLoading = false;
         s.error = a.error.message;
       });
